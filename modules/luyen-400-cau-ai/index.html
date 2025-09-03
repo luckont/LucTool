@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Luyện 400 câu AI</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+
+  <body>
+    <main class="wrap">
+      <nav class="breadcrumb">
+        <a href="/modules/">Công cụ</a> / Luyện 400 câu AI
+      </nav>
+      <h1>Luyện 400 câu AI</h1>
+
+      <section class="card">
+        <p>
+          Tải CSV theo định dạng:
+          <code
+            >question, optionA, optionB, optionC, optionD, correct(A-D|1-4),
+            explanation?</code
+          >
+        </p>
+        <!-- <div class="grid"> -->
+        <div>
+          <div class="actions">
+            <input type="file" id="fileInput" accept=".csv" hidden />
+            <button id="chooseFileBtn" class="btn">Tải CSV</button>
+            <button id="sampleBtn" class="btn secondary">Dữ liệu mẫu</button>
+          </div>
+        </div>
+        <div>
+          <div class="settings-box" style="margin-top: 12px">
+            <h3>⚙️ Cài đặt</h3>
+            <div class="form-group">
+              <label class="form-label">Số câu:</label>
+              <select id="questionCount" class="form-select">
+                <option value="all">Tất cả</option>
+                <option value="10">10 câu</option>
+                <option value="20">20 câu</option>
+                <option value="30">30 câu</option>
+                <option value="50">50 câu</option>
+                <option value="100">100 câu</option>
+              </select>
+              <span id="totalAvailable" class="muted small"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Thời gian:</label>
+              <select id="timeLimit" class="form-select">
+                <option value="900">15 phút</option>
+                <option value="1800" selected>30 phút</option>
+                <option value="2700">45 phút</option>
+                <option value="3600">60 phút</option>
+              </select>
+            </div>
+            <label class="form-checkbox"
+              ><input type="checkbox" id="randomOrder" /> Trộn thứ tự câu
+              hỏi</label
+            >
+            <button
+              id="startBtn"
+              class="btn"
+              style="width: 100%; margin-top: 10px"
+            >
+              🚀 Bắt đầu
+            </button>
+          </div>
+        </div>
+        <!-- </div> -->
+      </section>
+      <br />
+      <section id="quizSection" class="card hidden">
+        <div
+          class="quiz-header"
+          style="display: flex; align-items: center; gap: 12px"
+        >
+          <h2 class="quiz-title">Bài luyện</h2>
+          <div class="timer">
+            <div class="timer-label">Thời gian còn lại</div>
+            <div id="timer" class="timer-value">30:00</div>
+          </div>
+        </div>
+        <div
+          class="progress-info"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <span
+            >Câu <span id="currentQuestion">1</span>/<span id="totalQuestions"
+              >0</span
+            ></span
+          >
+          <span>Điểm: <span id="currentScore">0</span></span>
+        </div>
+        <div class="progress-bar-container">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <div class="question-status">
+          <div class="status-header">
+            <h4>📊 Trạng thái</h4>
+            <button id="toggleStatus" class="btn ghost small">Hiện</button>
+          </div>
+          <div id="statusGridWrap" class="status-grid-wrap">
+            <div id="statusGrid" class="status-grid"></div>
+          </div>
+        </div>
+
+        <div class="question-area">
+          <h3 id="questionText" class="q-title"></h3>
+          <div id="optionsContainer" class="options-container"></div>
+        </div>
+
+        <br />
+        <div class="actions">
+          <button id="prevBtn" class="btn secondary">← Câu trước</button>
+          <button id="nextBtn" class="btn">Câu tiếp →</button>
+          <button id="submitBtn" class="btn success">Nộp bài</button>
+        </div>
+      </section>
+
+      <!-- Modal kết quả -->
+      <div
+        id="resultModal"
+        class="modal hidden"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div class="modal-backdrop" data-close="1"></div>
+        <div class="modal-dialog" role="document" tabindex="-1">
+          <div class="modal-header">
+            <h3>Kết quả</h3>
+            <button
+              class="btn ghost small"
+              id="resultCloseBtn"
+              aria-label="Đóng"
+            >
+              ✕
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="results-grid">
+              <div class="result-card">
+                <div id="m_finalScore" class="result-value">0</div>
+                <div class="result-label">Điểm số</div>
+              </div>
+              <div class="result-card">
+                <div id="m_correctAnswers" class="result-value">0</div>
+                <div class="result-label">Câu đúng</div>
+              </div>
+              <div class="result-card">
+                <div id="m_accuracy" class="result-value">0%</div>
+                <div class="result-label">Độ chính xác</div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button id="m_reviewBtn" class="btn secondary">Xem lại bài</button>
+            <button id="m_restartBtn" class="btn">Làm lại</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="author">Nguyen Trong Thuan © 2025</div>
+    </footer>
+    <script type="module" src="/assets/js/tools/luyen-400-cau-ai.js"></script>
+  </body>
+</html>

@@ -1,0 +1,143 @@
+:root{
+  --bg:#0f172a; --card:#111827; --muted:#94a3b8; --text:#e5e7eb;
+  --primary:#3b82f6; --secondary:#334155; --success:#22c55e; --danger:#b91c1c;
+  --radius:16px; --header-h:56px; --footer-h:44px; --gap:12px;
+  color-scheme: dark light;
+}
+
+/* ===== Light theme (override biến màu) ===== */
+[data-theme="light"]{
+  --bg:#f7fafc;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#475569;
+  --primary:#2563eb;
+  --secondary:#e2e8f0;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --border:#e5e7eb;
+}
+
+/* dùng biến border nếu cần */
+.card, .form-select, .option { border-color: var(--border, #1f2937); }
+
+/* Chuyển màu mượt một chút */
+html, body, .card, .option, .btn, .status-item, .modal-dialog {
+  transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+
+/* Nút toggle theme */
+.theme-toggle{ display:inline-flex; align-items:center; justify-content:center; width:36px; height:32px; }
+[data-theme="light"] .theme-toggle .icon{ content:"☀️"; }
+
+/* ===== Reset nhẹ & tiện dụng ===== */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--text); background:var(--bg)}
+img{max-width:100%; display:block}
+.hidden{display:none}
+:focus{outline:none}
+:focus-visible{outline:2px solid rgba(59,130,246,.75); outline-offset:2px; border-radius:10px}
+@media (prefers-reduced-motion:no-preference){
+  *{scroll-behavior:smooth}
+}
+
+/* ===== Layout chung ===== */
+.wrap{max-width:1000px; margin:0 auto; padding:0px 16px;}
+.site-header{border-bottom:1px solid #1f2937; background:#0b1220; position:sticky; top:0; z-index:10}
+.site-header .wrap{display:flex; align-items:center; gap:16px; padding:10px 12px; min-height:var(--header-h)}
+.brand{display:flex; align-items:center; gap:8px; text-decoration:none; color:var(--text); font-weight:700}
+.brand img{width:28px; height:28px}
+.nav{margin-left:auto; display:flex; gap:12px}
+.nav a{color:var(--text); text-decoration:none; padding:8px 10px; border-radius:10px}
+.nav a.active,.nav a:hover{background:#111827}
+
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin:24px 0}
+.card{background:var(--card); border:1px solid #1f2937; border-radius:var(--radius); padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.hero{padding:40px 0}
+.cta-row{display:flex; gap:10px; margin-top:12px}
+.author{max-width:1000px; margin:0 auto; padding:0px 16px; text-align: center;}
+/* ===== Nút & form ===== */
+.btn{background:var(--primary); color:#fff; border:0; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer; transition:transform .06s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.secondary{background:var(--secondary)}
+.btn.success{background:var(--success)}
+.btn.ghost{background:transparent; border:1px solid #334155; color:#e5e7eb}
+.btn.ghost.small{padding:6px 10px; border-radius:10px; font-size:14px}
+.btn:disabled{opacity:.6; cursor:not-allowed}
+
+.form-select{width:100%; padding:8px 10px; background:#0b1220; color:var(--text); border:1px solid #1f2937; border-radius:10px}
+.form-label{display:block; margin:6px 0 4px; color:var(--muted); font-size:14px}
+.form-checkbox{display:flex; gap:8px; align-items:center; margin-top:8px; color:var(--text)}
+
+/* ===== Quiz: 1 màn hình / 1 câu (mobile-first) ===== */
+#quizSection{display:flex; flex-direction:column; min-height:calc(100dvh - var(--header-h) - var(--gap)); padding-bottom:12px}
+.quiz-header{display:flex; gap:8px; align-items:center}
+.progress-info{display:flex; justify-content:space-between; align-items:center}
+.progress-bar-container{height:6px; background:#1f2937; border-radius:999px; overflow:hidden; margin:8px 0}
+.progress-bar{height:100%; background:#3b82f6; width:0%}
+.timer{margin-left:auto; text-align:right}
+.timer-value{font-size:20px; font-weight:700}
+
+/* Trạng thái câu hỏi (status) */
+.status-header{display:flex; justify-content:space-between; align-items:center; margin:8px 0}
+.status-grid-wrap{max-height:0; overflow:hidden; transition:max-height .25s ease}
+.status-grid{display:grid; grid-template-columns:repeat(10,1fr); gap:6px}
+@media (min-width:480px){.status-grid{grid-template-columns:repeat(12,1fr)}}
+.status-item{text-align:center; padding:6px 0; border-radius:6px; cursor:pointer; background:#334155; color:#e5e7eb; font-size:14px; font-weight:600; user-select:none}
+.status-item.current{background:#3b82f6; color:#fff}
+.status-item.unanswered{background:#334155; color:#e5e7eb}
+.status-item.answered-correct{background:var(--success); color:#fff}
+.status-item.answered-incorrect{background:var(--danger); color:#fff}
+
+/* Khu nội dung câu hỏi + đáp án cuộn nội bộ nếu tràn */
+.question-area{display:flex; flex-direction:column; gap:10px; min-height:0; overflow:auto; padding-right:2px}
+#questionText{font-size:clamp(18px,2.6vw,22px); margin:8px 0 6px; line-height:1.4}
+.options-container{display:grid; gap:10px}
+
+/* Đáp án */
+.option{position:relative; display:flex; align-items:flex-start; gap:10px; padding:14px; border:1px solid #1f2937; border-radius:14px; background:#0b1220; cursor:pointer; word-break:break-word; white-space:normal; line-height:1.5; transition:background .12s ease,border-color .12s ease}
+.option input{position:absolute; opacity:0; pointer-events:none}
+.option .option-letter{min-width:32px; font-weight:800; flex-shrink:0}
+.option .option-text{flex:1; font-size:clamp(16px,2.6vw,18px)}
+.option:hover{background:#0e1424}
+.option.selected{outline:2px solid #3b82f6}
+.option.correct{border-color:#16a34a; background:#0f2b1a}
+.option.incorrect{border-color:#b91c1c; background:#2a0f10}
+
+/* Nút điều hướng cố định đáy khung quiz */
+#quizSection .actions{margin-top:auto; display:flex; gap:8px; position:sticky; bottom:0; background:linear-gradient(180deg,rgba(15,23,42,0) 0%, rgba(15,23,42,.9) 30%, rgba(15,23,42,1) 100%); padding-top:8px; padding-bottom:6px}
+#quizSection .actions .btn{flex:1}
+
+/* Tablet/desktop: mở rộng, hiện sẵn trạng thái */
+@media (min-width:768px){
+  #quizSection{min-height:calc(100dvh - var(--header-h) - var(--gap))}
+  .status-grid-wrap{max-height:220px}
+  #toggleStatus{display:none}
+}
+
+/* ===== Kết quả ===== */
+.results-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px}
+.result-card{background:#0b1220; border:1px solid #1f2937; border-radius:12px; padding:12px; text-align:center}
+.result-value{font-size:28px; font-weight:800}
+.result-label{color:var(--muted)}
+
+/* ===== Modal kết quả ===== */
+.modal{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1000}
+.modal.hidden{display:none}
+.modal-backdrop{position:absolute; inset:0; background:rgba(0,0,0,.55)}
+.modal-dialog{position:relative; z-index:1; width:min(560px,92vw); max-height:90dvh; overflow:auto; background:#0b1220; border:1px solid #1f2937; border-radius:16px; padding:14px; box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal-header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px}
+.modal-body{padding:6px 2px}
+.modal-actions{display:flex; gap:10px; justify-content:flex-end; margin-top:12px}
+body.modal-open{overflow:hidden}
+
+/* ===== Tiện ích nhỏ ===== */
+.q-meta{color:var(--muted)}
+.q-title{margin:.5rem 0 1rem}
+
+/* Scrollbar tinh gọn (WebKit) */
+.question-area::-webkit-scrollbar{width:8px}
+.question-area::-webkit-scrollbar-thumb{background:#1f2937; border-radius:999px}
+.question-area::-webkit-scrollbar-track{background:transparent}

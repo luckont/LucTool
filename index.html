@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trang chủ — Tổ chức/Chủ page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+    <main class="wrap">
+      <section class="hero">
+        <h1>Xin chào 👋</h1>
+        <p>Trang giới thiệu chính.</p>
+        <div class="cta-row">
+          <a class="btn" href="/modules/">Khám phá công cụ</a>
+          <a class="btn secondary" href="/guides/">Xem hướng dẫn</a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="wrap">© 2025</div></footer>
+    <script src="/assets/js/main.js" type="module"></script>
+    <script>
+    (async () => {
+      const url = "/components/header.html";
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        console.log("[header] status", res.status, url);
+        if (!res.ok) throw new Error("Fetch header failed: " + res.status);
+        const html = await res.text();
+        document.getElementById("header-placeholder").innerHTML = html;
+      } catch (e) {
+        console.error("[header] error", e);
+        document.getElementById("header-placeholder").innerHTML =
+          '<header class="site-header"><div class="wrap"><a class="brand" href="/">Trang chủ</a></div></header>';
+      }
+    })();
+    </script>
+    <script src="/assets/js/theme.js" defer></script>
+  </body>
+</html>
