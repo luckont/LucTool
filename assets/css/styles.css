@@ -180,9 +180,13 @@ img{max-width:100%; display:block}
 /* Tablet/desktop */
 @media (min-width:768px){
   #quizSection{min-height:calc(100dvh - var(--header-h) - var(--gap))}
-  .status-grid-wrap{max-height:220px}
+  .status-grid-wrap{
+    max-height:none !important;   /* bỏ giới hạn, ghi đè inline */
+    overflow:visible;
+  }
   #toggleStatus{display:none}
 }
+
 
 /* ===== Kết quả ===== */
 .results-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px}
